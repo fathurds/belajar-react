@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <title>Belajar React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 125px;
+        }
+    </style>
+</head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            const container = document.getElementById('root');
+            const root = ReactDOM.createRoot(container);
+
+            function CounterApp() {
+                const [counter, setCounter] = React.useState(0);
+
+                const handlePlus = () => setCounter(prev => prev + 1);
+                const handleMin = () => setCounter(prev => prev - 1);
+                const handleReset = () => setCounter(0);
+
+                const result = counter > 9 || counter < 0 ? "Done" : counter;
+                const operatorDisabled = result === "Done";
+
+                const Button = ({ text, ...nativeProps }) => {
+                    return <button {...nativeProps}>{text}</button>
+                }
+
+                return (
+                    <>
+                        <div className="container">
+                            <Button text="-" onClick={handleMin} disabled={operatorDisabled} />
+                            <span className="counter">{result}</span>
+                            <Button text="+" onClick={handlePlus} disabled={operatorDisabled} />
+                        </div>
+                        <br/>
+                        <Button text="Reset" onClick={handleReset} />
+                    </>
+                )
+            }
+
+            root.render(<CounterApp />);
+        </script>
+    </body>
+</html>
